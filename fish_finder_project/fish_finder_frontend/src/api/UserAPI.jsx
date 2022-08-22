@@ -29,6 +29,7 @@ async function signUpUser(data) {
     let response = await axios.post('/sign_up', data)
     return response
 }
+
 async function signOutUser() {
     let response = await axios.post('/sign_out')
     .then((response) => {

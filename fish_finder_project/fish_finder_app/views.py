@@ -19,6 +19,7 @@ def home_page(request):
 @api_view(['POST'])
 def sign_up(request):
 
+
     #pulling out user deatails and assigning the email to username for good measure
     try:
         #creating new user
@@ -27,7 +28,7 @@ def sign_up(request):
             last_name = json.loads(request.body)['last_name'],  
             zipcode = int(json.loads(request.body)['zipcode']), 
             state = json.loads(request.body)['state'], 
-            username = json.loads(request.body)['email'], 
+            username = json.loads(request.body)['username'], 
             email = json.loads(request.body)['email'], 
             password = json.loads(request.body)['password'])
 
@@ -36,7 +37,7 @@ def sign_up(request):
         print('Signup Error!')
         print(str(e))
     #since the user just signed up successfully I am logging them in so they are logged in when   
-    user = authenticate(email = json.loads(request.body)['email'], password = json.loads(request.body)['password'])
+    user = authenticate(username = json.loads(request.body)['username'], password = json.loads(request.body)['password'])
     login(request, user)
     #returning friendly message to be alerted to user
     return JsonResponse({'data': 'Account created successfully!'})
@@ -45,8 +46,9 @@ def sign_up(request):
 #login view
 @api_view(['POST'])
 def log_in(request):
+    print(json.loads(request.body)['password'])
     #grabbing the values and then the user
-    user = authenticate(email = json.loads(request.body)['email'], password = json.loads(request.body)['password'])
+    user = authenticate(username = json.loads(request.body)['username'], password = json.loads(request.body)['password'])
     
     #logging them in if they exist and are active user
     if user is not None:
@@ -73,7 +75,7 @@ def sign_out(request):
 @api_view(['GET'])
 def who_am_i(request):
     if request.user.is_authenticated:
-        data = serializers.serialize("json", [request.user], fields=['email', 'first_name', 'last_name'])
+        data = serializers.serialize("json", [request.user], fields=['username', 'first_name', 'last_name'])
         return HttpResponse(data)
     else:
         return JsonResponse({'user': None})

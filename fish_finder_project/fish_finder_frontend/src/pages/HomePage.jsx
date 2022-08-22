@@ -9,7 +9,7 @@ function HomePage() {
         
         <div className="home-page">
             <SplashImage />
-            <MDBContainer >
+            <MDBContainer classname="align-content-center justify-content-center">
                 <h1>Welcome to home page!!</h1>
             </MDBContainer>
         </div>

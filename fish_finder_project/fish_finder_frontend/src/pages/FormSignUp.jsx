@@ -12,6 +12,7 @@ import swal from 'sweetalert'
 
 
 function FormSignUp(){
+
     const [formData, setFormData] = useState({});
     const [submit, setSubmit] = useState(false);
 
@@ -20,10 +21,11 @@ function FormSignUp(){
         initialValues: {
             first_name: '',
             last_name: '',
+            username: '',
+            password: '',
             zipcode: '',
             state: '',
             email: '',
-            password: '',
             accept: false
         },
         validate: (data) => {
@@ -37,6 +39,14 @@ function FormSignUp(){
                 errors.last_name = 'Last name is required.';
             }
 
+            if (!data.username) {
+                errors.username = 'Username is required.';
+            }
+
+            if (!data.password) {
+                errors.password = 'Password is required.';
+            }
+
             if (!data.zipcode) {
                 errors.zipcode = 'Zipcode is required.';
             }
@@ -48,12 +58,9 @@ function FormSignUp(){
             if (!data.email) {
                 errors.email = 'Email is required.';
             }
+
             else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(data.email)) {
                 errors.email = 'Invalid email address. E.g. example@email.com';
-            }
-
-            if (!data.password) {
-                errors.password = 'Password is required.';
             }
 
             if (!data.accept) {
@@ -88,32 +95,16 @@ function FormSignUp(){
                 })
             })
             .then( () => {
-                window.location.href = "/";
                 formik.resetForm();
+                window.location.href = "/";
             });
         } 
-
     }, [submit])
     
 
-    const isFormFieldValid = (first_name) => !!(formik.touched[first_name] && formik.errors[first_name]);
-    const getFormErrorMessage = (first_name) => {
-        return isFormFieldValid(first_name) && <small className="p-error">{formik.errors[first_name]}</small>;
-    };
-
-    const isFormFieldValid2 = (last_name) => !!(formik.touched[last_name] && formik.errors[last_name]);
-    const getFormErrorMessage2 = (last_name) => {
-        return isFormFieldValid2(last_name) && <small className="p-error">{formik.errors[last_name]}</small>;
-    };
-
-    const isFormFieldValid3 = (zipcode) => !!(formik.touched[zipcode] && formik.errors[zipcode]);
-    const getFormErrorMessage3 = (zipcode) => {
-        return isFormFieldValid3(zipcode) && <small className="p-error">{formik.errors[zipcode]}</small>;
-    };
-
-    const isFormFieldValid4 = (state) => !!(formik.touched[state] && formik.errors[state]);
-    const getFormErrorMessage4 = (state) => {
-        return isFormFieldValid4(state) && <small className="p-error">{formik.errors[state]}</small>;
+    const isFormFieldValid = (field_name) => !!(formik.touched[field_name] && formik.errors[field_name]);
+    const getFormErrorMessage = (field_name) => {
+        return isFormFieldValid(field_name) && <small className="p-error">{formik.errors[field_name]}</small>;
     };
 
     const passwordHeader = <h6>Pick a password</h6>;
@@ -145,32 +136,17 @@ function FormSignUp(){
                         </div>
                         <div className="field">
                             <span className="p-float-label">
-                                <InputText id="last_name" name="last_name" value={formik.values.last_name} onChange={formik.handleChange} autoFocus className={classNames({ 'p-invalid': isFormFieldValid2('last_name') })} />
-                                <label htmlFor="last_name" className={classNames({ 'p-error': isFormFieldValid2('last_name') })}>Last Name*</label>
+                                <InputText id="last_name" name="last_name" value={formik.values.last_name} onChange={formik.handleChange} autoFocus className={classNames({ 'p-invalid': isFormFieldValid('last_name') })} />
+                                <label htmlFor="last_name" className={classNames({ 'p-error': isFormFieldValid('last_name') })}>Last Name*</label>
                             </span>
-                            {getFormErrorMessage2('last_name')}
+                            {getFormErrorMessage('last_name')}
                         </div>
                         <div className="field">
                             <span className="p-float-label">
-                                <InputText id="zipcode" name="zipcode" value={formik.values.zipcode} onChange={formik.handleChange} autoFocus className={classNames({ 'p-invalid': isFormFieldValid3('zipcode') })} />
-                                <label htmlFor="zipcode" className={classNames({ 'p-error': isFormFieldValid3('zipcode') })}>Zipcode*</label>
+                                <InputText id="username" name="username" value={formik.values.username} onChange={formik.handleChange} autoFocus className={classNames({ 'p-invalid': isFormFieldValid('username') })} />
+                                <label htmlFor="username" className={classNames({ 'p-error': isFormFieldValid('username') })}>Username*</label>
                             </span>
-                            {getFormErrorMessage3('zipcode')}
-                        </div>
-                        <div className="field">
-                            <span className="p-float-label">
-                                <InputText id="state" name="state" value={formik.values.state} onChange={formik.handleChange} autoFocus className={classNames({ 'p-invalid': isFormFieldValid4('state') })} />
-                                <label htmlFor="state" className={classNames({ 'p-error': isFormFieldValid4('state') })}>State*</label>
-                            </span>
-                            {getFormErrorMessage4('state')}
-                        </div>
-                        <div className="field">
-                            <span className="p-float-label p-input-icon-right">
-                                <i className="pi pi-envelope" />
-                                <InputText id="email" name="email" value={formik.values.email} onChange={formik.handleChange} className={classNames({ 'p-invalid': isFormFieldValid('email') })} />
-                                <label htmlFor="email" className={classNames({ 'p-error': isFormFieldValid('email') })}>Email*</label>
-                            </span>
-                            {getFormErrorMessage('email')}
+                            {getFormErrorMessage('username')}
                         </div>
                         <div className="field">
                             <span className="p-float-label">
@@ -179,6 +155,28 @@ function FormSignUp(){
                                 <label htmlFor="password" className={classNames({ 'p-error': isFormFieldValid('password') })}>Password*</label>
                             </span>
                             {getFormErrorMessage('password')}
+                        </div>
+                        <div className="field">
+                            <span className="p-float-label">
+                                <InputText id="zipcode" name="zipcode" value={formik.values.zipcode} onChange={formik.handleChange} autoFocus className={classNames({ 'p-invalid': isFormFieldValid('zipcode') })} />
+                                <label htmlFor="zipcode" className={classNames({ 'p-error': isFormFieldValid('zipcode') })}>Zipcode*</label>
+                            </span>
+                            {getFormErrorMessage('zipcode')}
+                        </div>
+                        <div className="field">
+                            <span className="p-float-label">
+                                <InputText id="state" name="state" value={formik.values.state} onChange={formik.handleChange} autoFocus className={classNames({ 'p-invalid': isFormFieldValid('state') })} />
+                                <label htmlFor="state" className={classNames({ 'p-error': isFormFieldValid('state') })}>State*</label>
+                            </span>
+                            {getFormErrorMessage('state')}
+                        </div>
+                        <div className="field">
+                            <span className="p-float-label p-input-icon-right">
+                                <i className="pi pi-envelope" />
+                                <InputText id="email" name="email" value={formik.values.email} onChange={formik.handleChange} className={classNames({ 'p-invalid': isFormFieldValid('email') })} />
+                                <label htmlFor="email" className={classNames({ 'p-error': isFormFieldValid('email') })}>Email*</label>
+                            </span>
+                            {getFormErrorMessage('email')}
                         </div>
                         <div className="field-checkbox">
                             <Checkbox inputId="accept" name="accept" checked={formik.values.accept} onChange={formik.handleChange} className={classNames({ 'p-invalid': isFormFieldValid('accept') })} />

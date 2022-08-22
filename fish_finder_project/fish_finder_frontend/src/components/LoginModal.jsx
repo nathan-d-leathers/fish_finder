@@ -17,8 +17,8 @@ function LoginModal() {
     function handleClick(event) {
         event.preventDefault()
         let data = {
-            "email": document.getElementById("email").value,
-            "password": document.getElementById("password").value   
+            "username": document.getElementById("username3").value,
+            "password": document.getElementById("password1").value   
         }
 
         logInUser(data)
@@ -37,18 +37,18 @@ function LoginModal() {
                                     <div className="flex">
                                         <MDBBtn className='btn-close ms-auto' color='none' onClick={toggleShow}></MDBBtn>
                                     </div>
-                                    <div className="text-center mb-5"> 
-                                        <img src={logo} alt="RB" height={50} className="mb-3" />
-                                        <div className="text-900 text-3xl font-medium mb-3">Welcome Back</div>
-                                        <span className="text-600 font-medium line-height-3">Don't have an account?</span>
-                                        <Link to={"/signup"} className="font-medium no-underline ml-2 text-blue-500 cursor-pointer">Create today!</Link>
-                                    </div>
+                                        <div className="text-center mb-5"> 
+                                            <img src={logo} alt="RB" height={50} className="mb-3" />
+                                            <div className="text-900 text-3xl font-medium mb-3">Welcome Back</div>
+                                            <span className="text-600 font-medium line-height-3">Don't have an account?</span>
+                                            <Link to={"/signup"} className="font-medium no-underline ml-2 text-blue-500 cursor-pointer">Create today!</Link>
+                                        </div>
                                     <div>
-                                        <label htmlFor="email" className="block text-900 font-medium mb-2">Email</label>
-                                        <InputText id="email" type="text" className="w-full mb-3" />
+                                        <label htmlFor="username3" className="block text-900 font-medium mb-2">Username</label>
+                                        <InputText id="username3" type="text" className="w-full mb-3" />
 
-                                        <label htmlFor="password" className="block text-900 font-medium mb-2">Password</label>
-                                        <InputText id="password" type="password" className="w-full mb-3" />
+                                        <label htmlFor="password1" className="block text-900 font-medium mb-2">Password</label>
+                                        <InputText id="password1" type="password" className="w-full mb-3" />
 
                                         <div className="flex align-items-center justify-content-between mb-6">
                                             <a className="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer">Forgot your password?</a>
