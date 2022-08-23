@@ -24,3 +24,10 @@
 -Back in terminal in folder that manage.py run $ python manage.py runserver
 
 -If all went right you should be able to open localhost:8000 and see the homepage
+
+
+
+
+Nathans Map Notes:
+
+-
