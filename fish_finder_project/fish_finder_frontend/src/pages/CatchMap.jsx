@@ -41,7 +41,6 @@ function CatchMap() {
 
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
-
         // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         //  R E P L A C E   T H I S   L I N E   W I T H   G O O G L E   M A P S   K E Y (line 8 of .env file)
         // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -132,30 +131,44 @@ function CatchMap() {
 
     //     const position = { lat: 33.772, lng: -117.214 }
 
-    const infoStyle = {
-        background: `white`,
-        border: `1px solid #ccc`,
-        padding: 3
+    // const infoStyle = {
+    //     background: `white`,
+    //     border: `1px solid #ccc`,
+    //     padding: 3
 
-    }
-
-    // const onLoad = infoWindow => {
-    //   console.log('infoWindow: ', infoWindow)
     // }
 
-    // <InfoWindow
-    //   onLoad={onLoad}
-    //   position={position}
-    // >
-    //   <div style={divStyle}>
-    //     <h1>InfoWindow</h1>
-    //   </div>
-    // </InfoWindow>
+    const [activeMarker, setActiveMarker] = useState(null);
 
-    //   ##########################-Marker-#####################################
-    const testCoord = { lat: 34.485118, lng: -82.809689 }
-    const [showTestWindow, setShowTestWindow] = useState(false)
+    const handleActiveMarker = (marker) => {
+        if (marker === activeMarker) {
+            return;
+        }
+        setActiveMarker(marker);
+    };
 
+    const testMarkers = [
+        {
+            id: 1,
+            name: "Fish 1",
+            position: { lat: 34.394142, lng: -82.874662 }
+        },
+        {
+            id: 2,
+            name: "Fish 2",
+            position: { lat: 34.434243, lng: -82.828167 }
+        },
+        {
+            id: 3,
+            name: "Fish 3",
+            position: { lat: 34.495208, lng: -82.857333 }
+        },
+        {
+            id: 4,
+            name: "Fish 4",
+            position: { lat: 34.518695, lng: -82.806761 }
+        }
+    ]
 
 
     return isLoaded ? (
@@ -172,21 +185,22 @@ function CatchMap() {
                     options={options}
                     onLoad={onMapLoad}
                     onUnmount={onUnmount}
+                    onClick={() => setActiveMarker(null)}
                 >
-                    <Marker
-                        position={testCoord}
-                        clickable={true}
-                    // onClick={setShowTestWindow(true)}
-                    >
-                    </Marker>
-                    <InfoWindow
-                        position={testCoord}
-                    >
-                        <div style={infoStyle}>
-                            <h1>Fish Caught!</h1>
-                            <h2>Heres where we can display db data about our catch</h2>
-                        </div>
-                    </InfoWindow>
+                    {testMarkers.map(({ id, name, position }) => (
+                        <Marker
+                            key={id}
+                            position={position}
+                            onClick={() => handleActiveMarker(id)}
+                        >
+                            {activeMarker === id ? (
+                                <InfoWindow onCloseClick={() => setActiveMarker(null)}>
+                                    <div
+                                    // style={infoStyle}
+                                    >{name}</div>
+                                </InfoWindow>
+                            ) : null}
+                        </Marker>))}
                     <></>
                 </GoogleMap>
             </div>
