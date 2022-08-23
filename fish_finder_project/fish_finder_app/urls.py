@@ -7,4 +7,6 @@ urlpatterns = [
     path('log_in', views.log_in),
     path('sign_out', views.sign_out),
     path('whoami', views.who_am_i),
+    path('fishdb', views.fish_db),
+    path('fishdbbyid', views.fishdb_byid),
 ]

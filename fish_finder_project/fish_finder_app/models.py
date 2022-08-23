@@ -13,3 +13,10 @@ class AppUser(AbstractUser):
     zipcode = models.PositiveIntegerField()
     state = models.CharField(max_length=2)
     is_active = models.BooleanField(default=True)
+
+class FishDB(models.Model):
+    name = models.CharField(max_length=100)
+    latin_name = models.CharField(max_length=100)
+    fish_record = models.CharField(max_length=100, null=True)
+    fish_docs = models.TextField()
+    fish_pic = models.CharField(max_length=100)
